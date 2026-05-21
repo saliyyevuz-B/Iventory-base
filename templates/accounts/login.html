@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="min-vh-100 d-flex align-items-center justify-content-center" style="margin-top: -24px;">
+    <div class="col-md-5">
+        <div class="card border-0 shadow-lg rounded-4">
+            <div class="card-body p-5">
+
+                <!-- Logo / Icon -->
+                <div class="text-center mb-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-success bg-opacity-10 rounded-circle mb-3" style="width:64px;height:64px;">
+                        <span style="font-size:28px;">🔐</span>
+                    </div>
+                    <h4 class="fw-bold mb-1">Tizimga kirish</h4>
+                    <p class="text-muted small">Hisobingizga kiring</p>
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger rounded-3 small">
+                    ⚠️ {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Foydalanuvchi nomi</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">👤</span>
+                            <input type="text" name="username" class="form-control border-start-0 bg-light" placeholder="Username">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Parol</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">🔒</span>
+                            <input type="password" name="password" class="form-control border-start-0 bg-light" placeholder="Parol">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-success w-100 py-2 fw-semibold rounded-3 mt-2">
+                        Kirish →
+                    </button>
+                </form>
+
+                <hr class="my-4">
+                <p class="text-center text-muted small mb-0">
+                    Hisobingiz yo'qmi?
+                    <a href="{% url 'register' %}" class="text-success fw-semibold text-decoration-none">Ro'yxatdan o'ting</a>
+                </p>
+
+            </div>
+        </div>
+        <p class="text-center text-muted small mt-3">© 2025 Inventory System</p>
+    </div>
+</div>
+{% endblock %}

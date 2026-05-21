@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h5 class="fw-bold mb-0">🚚 Supplierlar</h5>
+    {% if user.role == 'admin' %}
+    <a href="{% url 'supplier_create' %}" class="btn btn-primary rounded-3">+ Qo'shish</a>
+    {% endif %}
+</div>
+
+<div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Nomi</th>
+                    <th>Kompaniya</th>
+                    <th>Telefon</th>
+                    <th>Manzil</th>
+                    <th>Sana</th>
+                    {% if user.role == 'admin' %}<th></th>{% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in suppliers %}
+                <tr>
+                    <td class="fw-semibold">{{ s.name }}</td>
+                    <td>{{ s.company }}</td>
+                    <td>{{ s.phone }}</td>
+                    <td>{{ s.address|default:"-" }}</td>
+                    <td class="text-muted small">{{ s.created_at|date:"d.m.Y" }}</td>
+                    {% if user.role == 'admin' %}
+                    <td>
+                        <a href="{% url 'supplier_delete' s.pk %}"
+                           class="btn btn-sm btn-outline-danger rounded-3"
+                           onclick="return confirm('O\'chirilsinmi?')">O'chirish</a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted py-4">Hozircha supplier yo'q</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

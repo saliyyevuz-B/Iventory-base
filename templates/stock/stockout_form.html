@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-4">📤 Yangi Chiqim</h5>
+                {% if error %}
+                <div class="alert alert-danger rounded-3">⚠️ {{ error }}</div>
+                {% endif %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Mahsulot</label>
+                        <select name="product" class="form-select bg-light" required>
+                            <option value="">— Tanlang —</option>
+                            {% for p in products %}
+                            <option value="{{ p.pk }}">{{ p.name }} (qoldiq: {{ p.stock }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Miqdor</label>
+                        <input type="number" name="quantity" class="form-control bg-light" min="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Mijoz ismi</label>
+                        <input type="text" name="customer_name" class="form-control bg-light" required>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-danger rounded-3 px-4">Saqlash</button>
+                        <a href="{% url 'stockout_list' %}" class="btn btn-outline-secondary rounded-3">Bekor</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

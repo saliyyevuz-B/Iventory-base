@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-4">
+                    {% if product %}✏️ Tahrirlash{% else %}📦 Yangi Mahsulot{% endif %}
+                </h5>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Nomi</label>
+                        <input type="text" name="name" class="form-control bg-light" value="{{ product.name|default:'' }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">SKU</label>
+                        <input type="text" name="sku" class="form-control bg-light" value="{{ product.sku|default:'' }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Kategoriya</label>
+                        <input type="text" name="category" class="form-control bg-light" value="{{ product.category|default:'' }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Supplier</label>
+                        <select name="supplier" class="form-select bg-light">
+                            <option value="">— Tanlang —</option>
+                            {% for s in suppliers %}
+                            <option value="{{ s.pk }}" {% if product.supplier_id == s.pk %}selected{% endif %}>
+                                {{ s.name }} — {{ s.company }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Narx (so'm)</label>
+                        <input type="number" name="price" class="form-control bg-light" value="{{ product.price|default:'' }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Minimal qoldiq</label>
+                        <input type="number" name="min_stock" class="form-control bg-light" value="{{ product.min_stock|default:'10' }}" required>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-primary rounded-3 px-4">Saqlash</button>
+                        <a href="{% url 'product_list' %}" class="btn btn-outline-secondary rounded-3">Bekor</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

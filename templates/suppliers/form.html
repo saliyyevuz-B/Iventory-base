@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-0 shadow-sm rounded-4">
+            <div class="card-body p-4">
+                <h5 class="fw-bold mb-4">🚚 Yangi Supplier</h5>
+                <form method="POST" action="{% url 'supplier_create' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Nomi</label>
+                        <input type="text" name="name" class="form-control bg-light" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Kompaniya</label>
+                        <input type="text" name="company" class="form-control bg-light" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Telefon</label>
+                        <input type="text" name="phone" class="form-control bg-light" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold small text-secondary">Manzil</label>
+                        <textarea name="address" class="form-control bg-light" rows="2"></textarea>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-primary rounded-3 px-4">Saqlash</button>
+                        <a href="{% url 'supplier_list' %}" class="btn btn-outline-secondary rounded-3">Bekor</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
